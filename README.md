@@ -49,3 +49,35 @@ configuration relevant for your application.
 The app skeleton uses a subset of [Foundation](http://foundation.zurb.com/) (v5) CSS
 framework by default. You can, however, replace it with any other library or
 custom styles.
+Création de l'application cake :
+php composer.phar create-project --prefer-dist cakephp/app blog
+
+Création du dépot distant
+cd blog
+git init 				#initialisation du dépot git
+git add -A				#indexation des fichiers à suivre
+git commit -m "création du projet"	#commit initial
+git remote add origin https://github.com/juli1legall/blogcakephp.git #ajout du dépot distant
+git push -u origin master		push
+
+Création de la BDD
+mysql -u root -p
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';
+CREATE DATABASE blog;
+GRANT ALL PRIVILEGES ON blog.* TO 'blog'@'localhost';
+
+Création de la table
+CREATE TABLE IF NOT EXISTS `posts` (
+     `id` int(11) NOT NULL auto_increment,
+     `title` varchar(50) default NULL,
+     `content` text,
+     `created` datetime default NULL,
+     `modified` datetime default NULL,
+     `published` tinyint(1) NOT NULL default '1',
+     PRIMARY KEY (`id`)
+);
+
+INSERT INTO `posts` (`id`,`title`,`content`,`created`,`modified`,`published`)
+VALUES (1,'Premier article', 'Contenu du premier article','2008-06-19 18:26:11','2008-06-19 18:26:11',1),
+(2,'Second article', 'Contenu du second article','2008-06-20 18:26:11','2008-06-20 18:26:11',1),
+(3,'Troisème article', 'Contenu du troisième article','2008-06-21 18:26:11','2008-06-21 18:26:11',1);
