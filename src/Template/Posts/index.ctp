@@ -19,9 +19,15 @@
     <td><?php echo $post->created; ?></td>
     <td><?php echo $post->modified; ?></td>
     <td>
-      <?php echo $this->Html->link('Edit',['action' =>'edit',$post->id]);
+      <?php if($post->published==1){
+        echo $this->Html->link('Unpublish',['action' =>'publish','?'=>['post'=>$post->id,'publish'=>false]]);
+      }else{
+        echo $this->Html->link('Publish',['action' =>'publish','?'=>['post'=>$post->id,'publish'=>true]]);
+      }
             echo " / ";
-            echo $this->Html->link('Supprimer',['action' =>'delete',$post->id]);
+            echo $this->Html->link('Edit',['action' =>'edit',$post->id]);
+            echo " / ";
+            echo $this->Html->link('Supprimer',['action' =>'delete',$post->id],['confirm'=>'Êtes-vous sûr de vouloir dépublier cet article ?']);
       ?>
   </tr>
 <?php endforeach; ?>

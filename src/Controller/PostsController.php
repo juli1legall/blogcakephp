@@ -27,6 +27,24 @@ class PostsController extends AppController{
     $this->set('post',$post);
   }
 
+  public function publish(){
+    $id = $this->request->getQuery('post');
+    $publish = $this->request->getQuery('publish');
+
+    $post = $this->Posts->findById($id)->firstOrFail();
+    if($publish == 0){
+      $post->published=0;
+    }elseif ($publish =1) {
+      $post->published=1;
+    }else{
+      throw new \Exception("Valeur de publish inconnue", 1);
+    }
+    if($this->Posts->save($post)){
+      $this->Flash->success(__('Votre article a été sauvegardé'));
+      return $this->redirect(['action'=>'index']);
+    }
+  }
+
   public function delete($id = null){
     //$this->request->allowMethod(['post','delete']);
     $post = $this->Posts->findById($id)->firstOrFail();
